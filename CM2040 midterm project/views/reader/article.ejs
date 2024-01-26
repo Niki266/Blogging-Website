@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head', {blog_settings}) %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header', {blog_settings}) %>
+      <div class="container">
+        <div class="row">
+          <article class="col-md-12">
+            <div class="article-container">
+              <h1 id="article" class="text-light mb-1">
+                <%= article.article_title %>
+              </h1>
+              <small class="text-light-emphasis"
+                >Datetime: <%= article.article_published_on %> by <%=
+                article.article_author %>
+              </small>
+            </div>
+            <h3 class="card-title my-3 text-light">
+              <%= article.article_subtitle %>
+            </h3>
+            <p class="card-text my-3 text-light">
+              <%= article.article_content %>
+            </p>
+            <div
+              class="btn-group me-3"
+              role="group"
+              aria-label="Basic outlined example"
+            >
+              <a
+                href="/article/<%= article.article_id %>"
+                class="btn btn-outline-light"
+                data-article-id="<%= article.article_id %>"
+                onclick="likeArticle(<%= article.article_id %>)"
+              >
+                <i class="bi bi-hand-thumbs-up"></i> Like
+                <span class="badge text-bg-secondary"
+                  ><%= article.article_likes %>
+                </span>
+              </a>
+              <button
+                type="button"
+                class="btn btn-outline-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#comment-form-collapse"
+                aria-expanded="true"
+                aria-controls="comment-form-collapse"
+              >
+                <i class="bi bi-chat-square-dots"></i> Comment
+              </button>
+            </div>
+            <a href="/" class="btn btn-primary"> Back </a>
+
+            <div class="accordion mt-3">
+              <div class="accordion-item comment-form">
+                <div
+                  id="comment-form-collapse"
+                  class="accordion-collapse collapse hide"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <form onsubmit="submitComment(<%= article.article_id %>)">
+                      <div class="form-floating mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="comment-name"
+                          placeholder="your name"
+                          required
+                        />
+                        <label for="comment-name">Your name</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <textarea
+                          class="form-control"
+                          id="comment-text"
+                          rows="3"
+                          placeholder="your comment"
+                          required
+                        ></textarea>
+                        <label for="comment-text">Comment</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="comment-list mt-3">
+              <ul class="list-group list-group-flush">
+                <% comments.forEach(comment => { %>
+                <li
+                  class="list-group-item d-flex flex-column flex-lg-row align-items-center column-gap-3"
+                >
+                  <div class="ms-2 me-auto w-75">
+                    <div class="fw-bold"><%= comment.comment_name %></div>
+                    <%= comment.comment_text %>
+                  </div>
+                  <div
+                    class="btn-group w-25 mx-w-100 align-self-start my-3"
+                    role="group"
+                  >
+                    <a
+                      href="/article/<%= article.article_id %>"
+                      class="btn btn-primary"
+                      data-comment-id="<%= comment.comment_id %>"
+                      onclick="likeComment(<%= comment.comment_id %>)"
+                    >
+                      <i class="bi bi-hand-thumbs-up"></i> Like
+                      <span class="badge text-bg-secondary"
+                        ><%= comment.comment_likes %>
+                      </span>
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteComment"
+                      onclick="deleteComment(<%= comment.comment_id %>)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Model before deleting a comment -->
+          <div
+            class="modal fade"
+            id="deleteComment"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="deleteCommentLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="deleteCommentLabel">
+                    Delete Comment
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete this comment?</p>
+                </div>
+                <div class="modal-footer">
+                  <a class="btn btn-danger" id="delete-comment-confirm-btn">
+                    Delete
+                  </a>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment form submittion -->
+          <script>
+            // Submit comment
+            const submitComment = (article_id) => {
+              axios
+                .post(`/article/${article_id}/comment`, {
+                  comment_name: document.getElementById('comment-name').value,
+                  comment_text: document.getElementById('comment-text').value,
+                })
+                .then((res) => {
+                  console.log(res)
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+
+            // Like article
+            const likeArticle = () => {
+              axios
+                .put('/article/<%= article.article_id %>/like')
+                .then((res) => {
+                  console.log(res)
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+
+            // Like comment
+            const likeComment = (comment_id) => {
+              axios
+                .put(
+                  `/article/<%= article.article_id %>/comment/${comment_id}/like`
+                )
+                .then((res) => {
+                  console.log(res)
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+
+            // delete comment
+            const deleteComment = (comment_id) => {
+              const deleteCommentConfirmBtn = document.getElementById(
+                'delete-comment-confirm-btn'
+              )
+              deleteCommentConfirmBtn.setAttribute(
+                'onclick',
+                `deleteCommentConfirm(${comment_id})`
+              )
+            }
+
+            // delete comment confirm
+            const deleteCommentConfirm = (comment_id) => {
+              axios
+                .delete(
+                  `/article/<%= article.article_id %>/comment/${comment_id}/delete`
+                )
+                .then((res) => {
+                  console.log(res)
+                  location.reload()
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer', {blog_settings}) %>
+  </body>
+</html>

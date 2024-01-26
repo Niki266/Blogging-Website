@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head', {blog_settings}) %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header', {blog_settings}) %>
+      <div class="container wrapper">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-container">
+              <h1 id="page-title" class="fit">Recent Articles</h1>
+            </div>
+            <script>
+              fitty('#page-title')
+            </script>
+            <div class="grid row row-gap-4">
+              <% articles.forEach(function(article){ %>
+              <div class="col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-text">
+                      <small class="text-muted"
+                        >Datetime: <%= article.article_published_on %> by <%=
+                        article.article_author %>
+                      </small>
+                    </p>
+                    <h5 class="card-title"><%= article.article_title %></h5>
+                    <p class="card-text"><%= article.article_subtitle %></p>
+                    <a
+                      href="/article/<%= article.article_id %>"
+                      class="btn btn-read-article"
+                      >Read article</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <% }) %> <% if(articles.length === 0){ %>
+              <h3 data-bs-theme="dark" class="text-center">
+                Sorry, No articles has been published!
+              </h3>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer', {blog_settings}) %>
+  </body>
+</html>

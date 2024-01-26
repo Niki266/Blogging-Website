@@ -1,0 +1,51 @@
+<header class="p-0 pb-3 purple-bg">
+  <div class="container">
+    <nav
+      id="mainNav"
+      class="navbar navbar-dark navbar-expand-md sticky-top py-3"
+    >
+      <div class="container-fluid gap-3 align-items-start p-0 m-0">
+        <div
+          class="d-flex justify-content-between column-gap-3 justify-content-end w-100"
+        >
+          <div class="d-flex flex-column gap-1">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+              <span
+                class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"
+              >
+                <i class="bi bi-code-slash fs-2"></i> </span
+              ><span class="fs-3 fw-bold"
+                ><%= blog_settings.blog_title %></span
+              ></a
+            >
+            <span class="fw-normal d-block">
+              <%= blog_settings.blog_subtitle %>
+            </span>
+            <span class="fw-light d-block">
+              <small class="text-light"
+                >Author: <%= blog_settings.blog_author %>
+              </small>
+            </span>
+          </div>
+        </div>
+        <div class="btn-group me-3" role="group">
+          <a href="/" class="btn btn-outline-light">Reader</a>
+          <a href="/author" class="btn btn-outline-light">Author</a>
+        </div>
+        <a
+          href="/author/blog-settings"
+          class="btn btn-light setting-btn d-none"
+        >
+          Settings
+        </a>
+        <script>
+          // Show settings button if on author page
+          const settingBtn = document.querySelector('.setting-btn')
+          if (window.location.pathname.match('/author')) {
+            settingBtn.classList.remove('d-none')
+          }
+        </script>
+      </div>
+    </nav>
+  </div>
+</header>

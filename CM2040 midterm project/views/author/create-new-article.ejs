@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head', {blog_settings}) %>
+  </head>
+  <body>
+    <div>
+      <%- include('../partials/header', {blog_settings}) %>
+      <div class="container wrapper">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="title-container">
+              <h1 id="page-title" class="fit">Create new draft article</h1>
+            </div>
+            <script>
+              fitty('#page-title', { minSize: 20, maxSize: 80 })
+            </script>
+          </div>
+        </div>
+        <div class="row">
+          <form onsubmit="submitArticle()">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="article-title"
+                placeholder="article title"
+                required
+              />
+              <label for="article-title">Article title</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="article-subtitle"
+                placeholder="article subtitle"
+                required
+              />
+              <label for="article-subtitle">Article subtitle</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea
+                class="form-control textarea"
+                id="article-content"
+                placeholder="article content"
+                required
+              ></textarea>
+              <label for="article-content">Article content</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/author" class="btn btn-secondary mx-3">Back</a>
+          </form>
+          <script>
+            // submitting the new article data to server
+            const submitArticle = () => {
+              const article_title =
+                document.getElementById('article-title').value
+              const article_subtitle =
+                document.getElementById('article-subtitle').value
+              const article_content =
+                document.getElementById('article-content').value
+
+              const article = {
+                article_title,
+                article_subtitle,
+                article_content,
+              }
+
+              axios
+                .post('/author/create-new-article', { ...article })
+                .then((response) => {
+                  console.log(response)
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer', {blog_settings}) %>
+  </body>
+</html>
