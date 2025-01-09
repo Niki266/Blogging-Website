@@ -1,38 +1,53 @@
-### Blogging tool with SQLite3 and Node.js
+# Blogging Tool with SQLite3 and Node.js 📝
 
-#### Installation requirements
+This is a lightweight blogging tool built with SQLite3 and Node.js. It enables users to create, edit, and view blog articles with a simple and intuitive interface.
 
-- NodeJS 
-- Sqlite3 
+## 🚀 Features
+- **Reader Page**: View all published articles.
+- **Author Page**: Create and edit articles.
+- **Seamless Navigation**: Easily switch between reader and author pages.
+- **Database Management**: SQLite3 for storing articles with simple commands for creation and cleanup.
 
-To install all the node packages run `npm install` from the project directory
+## 🛠️ Installation Requirements
+- **Node.js**
+- **SQLite3**
 
-#### Getting started
+### Installation Steps
+1. Clone the repository and navigate to the project directory.
+2. Install all required Node packages:
+   ```bash
+   npm install
+   ```
+3. If there is an existing database, clean it:
+   ```bash
+   npm run clean-db
+   ```
+   *(Optional: Skip this step if starting fresh.)*
+4. Create the database:
+   ```bash
+   npm run build-db
+   ```
+5. Start the server:
+   ```bash
+   npm run start
+   ```
+6. Access the web application in your browser at [http://localhost:3000](http://localhost:3000).
 
-- Install packages with `npm install`
-- If there is previous database clean it with `npm run clean-db` else skip this step
-- Create the database with `npm run build-db`
-- Start the server with `npm run start`
-- Access the web app via http://localhost:3000
+## Commands
+- `npm run start` - Start the server.
+- `npm run build-db` - Create the database.
+- `npm run clean-db` - Delete the database.
+- `npm install` - Install all required Node packages.
 
-#### Commands
+## Database Schema
+The database schema is defined in `db_schema.sql`. This file contains the structure and relationships for the SQLite database.
 
-- `npm run start` - start the server
-- `npm run build-db` - create the database
-- `npm run clean-db` - delete the database
-- `clean-db` - delete the database
-- `npm install` - install all node packages
+## How to Use the Web App
+1. Open the web app at [http://localhost:3000](http://localhost:3000).
+2. **Main Pages**:
+   - **Reader Page**: [http://localhost:3000/](http://localhost:3000/)
+     - View all published articles.
+   - **Author Page**: [http://localhost:3000/author](http://localhost:3000/author)
+     - Create new articles or edit existing ones.
+3. Use the navigation buttons in the top-right corner to switch between Reader and Author pages.
 
-#### Database schema
-
-db_schema.sql
-
-#### How to use the web app
-
-- The web app can be accessed via http://localhost:3000
-- The web app has 2 main pages
-  - Reader page: http://localhost:3000/
-  - Author page: http://localhost:3000/author
-- Reader and author pages can be switched between using the buttons in the top right corner of the page.
-- The reader page allows you to view the published articles in the database.
-- The author page allows you to create new articles and edit existing ones.
