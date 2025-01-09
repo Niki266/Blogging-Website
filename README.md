@@ -1,14 +1,14 @@
-# Blogging Tool with SQLite3 and Node.js 📝
+# Blogging Tool with SQLite3 and Node.js 
 
 This is a lightweight blogging tool built with SQLite3 and Node.js. It enables users to create, edit, and view blog articles with a simple and intuitive interface.
 
-## 🚀 Features
+## Features
 - **Reader Page**: View all published articles.
 - **Author Page**: Create and edit articles.
 - **Seamless Navigation**: Easily switch between reader and author pages.
 - **Database Management**: SQLite3 for storing articles with simple commands for creation and cleanup.
 
-## 🛠️ Installation Requirements
+## Installation Requirements
 - **Node.js**
 - **SQLite3**
 
